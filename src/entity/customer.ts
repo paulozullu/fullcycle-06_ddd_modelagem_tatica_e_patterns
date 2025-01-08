@@ -1,10 +1,10 @@
 import Address from "./address";
 
 export default class Customer {
-    _id: string;
-    _name: string = "";
-    _address!: Address;
-    _active: boolean = false;
+    private _id: string;
+    private _name: string = "";
+    private _address!: Address;
+    private _active: boolean = false;
 
     constructor(id: string, name: string) {
         this._id = id;
@@ -22,19 +22,11 @@ export default class Customer {
         }
     }
 
-    get id() {
-        return this._id;
-    }
-
-    get name() {
+    get name(): string {
         return this._name;
     }
 
-    get address() {
-        return this._address;
-    }
-
-    get active() {
+    isActive(): boolean {
         return this._active;
     }
 
