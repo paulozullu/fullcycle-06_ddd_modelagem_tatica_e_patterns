@@ -16,19 +16,19 @@ export default class Order {
 
   validate() {
     if (!this._id.length) {
-        throw new Error("Id is required");
+      throw new Error('Id is required');
     }
 
     if (!this._customerId.length) {
-        throw new Error("customerId is required");
+      throw new Error('customerId is required');
     }
 
     if (!this._items.length) {
-        throw new Error("Item quantity must be greater than 0");
+      throw new Error('Item quantity must be greater than 0');
     }
-}
+  }
 
   total(): number {
-    return this._items.reduce((acc, item) => acc + item.price, 0);
+    return this._items.reduce((acc, item) => acc + item.orderItemTotal(), 0);
   }
 }
