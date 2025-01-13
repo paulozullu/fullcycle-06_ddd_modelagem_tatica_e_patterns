@@ -26,6 +26,10 @@ export default class Customer {
         return this._name;
     }
 
+    get id(): string {
+        return this._id;
+    }
+
     isActive(): boolean {
         return this._active;
     }
