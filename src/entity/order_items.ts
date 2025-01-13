@@ -1,14 +1,41 @@
 export default class OrderItem {
   private _id: string;
+  private _productId: string; // different aggregate
   private _name: string;
   private _price: number;
   private _quantity: number;
 
-  constructor(id: string, name: string, price: number, quantity: number) {
+  constructor(
+    id: string,
+    name: string,
+    price: number,
+    quantity: number,
+    productId: string
+  ) {
     this._id = id;
     this._name = name;
     this._price = price;
     this._quantity = quantity;
+    this._productId = productId;
+    this.validate();
+  }
+
+  validate() {
+    if (!this._id.length) {
+      throw new Error('Id is required');
+    }
+
+    if (!this._name.length) {
+      throw new Error('Name is required');
+    }
+
+    if (this._price < 0) {
+      throw new Error('Price must be greater then zero');
+    }
+
+    if (this._quantity <= 0) {
+      throw new Error('Item quantity must be greater than 0');
+    }
   }
 
   get price(): number {
