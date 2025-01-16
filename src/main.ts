@@ -10,6 +10,6 @@ customer.address = address;
 customer.activate();
 
 // aggregate (object - entity)
-const item1 = new OrderItem("1", "Item 1", 100);
-const items2 = new OrderItem("2", "Item 2", 15);
+const item1 = new OrderItem("1", "Item 1", 100, 2, "p1");
+const items2 = new OrderItem("2", "Item 2", 15, 3, "p2");
 const order = new Order("1", customer.id, [item1, items2]);
