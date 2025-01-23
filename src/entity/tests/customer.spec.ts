@@ -32,7 +32,6 @@ describe('Customer unit tests', () => {
 
     expect(customer.isActive()).toBe(false);
   });
-});
 
 it('should throw error when address is undefined', () => {
   const customer = new Customer('123', 'John');
@@ -40,5 +39,14 @@ it('should throw error when address is undefined', () => {
   expect(() => {
     customer.activate();
   }).toThrowError('Address is mandatory to activate a customer');
+});
 
+  it('should add reward points', () => {
+    const customer = new Customer('123', 'John');
+    expect(customer.rewardPoints).toBe(0);
+
+    customer.addRewardPoints(100);
+
+    expect(customer.rewardPoints).toBe(100);
+  });
 });
