@@ -13,6 +13,22 @@ export default class Address {
     this.validate();
   }
 
+  get street() {
+    return this._street;
+  }
+
+  get city() {
+    return this._city;
+  }
+
+  get number() {
+    return this._number;
+  }
+
+  get zip() {
+    return this._zip;
+  }
+
   validate() {
     if (!this._street.length) {
       throw new Error('Street is required');
