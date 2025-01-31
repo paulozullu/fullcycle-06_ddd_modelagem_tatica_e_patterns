@@ -1,4 +1,5 @@
 import Order from '../../domain/entity/order';
+import OrderItem from '../../domain/entity/order_items';
 import OrderRepositoryInterface from '../../domain/repository/order.repository.interface';
 import OrderItemModel from '../db/sequelize/model/order-item.model';
 import OrderModel from '../db/sequelize/model/order.model';
@@ -48,7 +49,24 @@ export default class OrderRepository implements OrderRepositoryInterface {
   }
 
   async find(id: string): Promise<Order> {
-   throw new Error('Method not implemented.');
+    const orderModel = await OrderModel.findByPk(id, {
+      include: ['items'],
+    });
+
+    if (!orderModel) throw new Error('Order not found');
+
+    const items = orderModel.items.map((item) => (
+      new OrderItem(
+        item.id,
+        item.name,
+        item.price,
+        item.quantity,
+        item.productId
+      )));
+
+    const order = new Order(orderModel.id, orderModel.customerId, items);
+
+    return order;
   }
 
   async findAll(): Promise<Order[]> {

@@ -137,4 +137,36 @@ describe('OrderRepository test', () => {
       ],
     });
   });
+
+  it('should find an order', async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer('1', 'John Doe');
+    const address = new Address('Street', 'City', 7, 'Zip');
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    const product = new Product('1', 'Product', 100);
+    await productRepository.create(product);
+
+    const orderItem = new OrderItem(
+      '1',
+      product.name,
+      product.price,
+      5,
+      product.id
+    );
+
+    const order = new Order('1', customer.id, [orderItem]);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    const foundOrder = await orderRepository.find(order.id);
+
+    expect(foundOrder).not.toBeNull();
+    expect(foundOrder.id).toBe(order.id);
+    expect(foundOrder.customerId).toBe(order.customerId);
+    expect(foundOrder.items).toStrictEqual(order.items);
+  });
 });

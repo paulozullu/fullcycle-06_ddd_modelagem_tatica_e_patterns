@@ -36,6 +36,10 @@ export default class OrderItem {
     return this._quantity;
   }
 
+  set id(id: string) {
+    this._id = id;
+  }
+
   changeName(name: string): void {
     this._name = name;
   }
