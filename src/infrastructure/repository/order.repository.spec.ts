@@ -82,4 +82,59 @@ describe('OrderRepository test', () => {
       ],
     });
   });
+
+  it('should update an order', async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer('1', 'John Doe');
+    const address = new Address('Street', 'City', 7, 'Zip');
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    const product = new Product('1', 'Product', 100);
+    await productRepository.create(product);
+
+    const orderItem = new OrderItem(
+      '1',
+      product.name,
+      product.price,
+      5,
+      product.id
+    );
+
+    const order = new Order('1', customer.id, [orderItem]);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    orderItem.changeQuantity(10)
+    orderItem.changePrice(product.price + 5);
+    orderItem.changeName(`${product.name} Updated`);
+
+    order.items = [orderItem];
+
+    await orderRepository.update(order);
+
+    const orderModel = await OrderModel.findByPk(order.id, {
+      include: ['items'],
+    });
+
+    expect(orderModel).not.toBeNull();
+    expect(orderModel.id).toBe(order.id);
+    expect(orderModel.toJSON()).toStrictEqual({
+      id: '1',
+      customerId: customer.id,
+      total: orderItem.quantity * orderItem.price,
+      items: [
+        {
+          id: orderItem.id,
+          name: orderItem.name,
+          price: 105,
+          quantity: 10,
+          orderId: order.id,
+          productId: orderItem.productId,
+        },
+      ],
+    });
+  });
 });

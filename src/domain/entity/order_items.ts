@@ -36,6 +36,18 @@ export default class OrderItem {
     return this._quantity;
   }
 
+  changeName(name: string): void {
+    this._name = name;
+  }
+
+  changePrice(price: number): void {
+    this._price = price;
+  }
+
+  changeQuantity(quantity: number): void {
+    this._quantity = quantity;
+  }
+
   validate() {
     if (!this._id.length) {
       throw new Error('Id is required');

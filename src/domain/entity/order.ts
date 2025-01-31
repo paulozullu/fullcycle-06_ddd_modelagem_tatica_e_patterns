@@ -26,6 +26,10 @@ export default class Order {
     return this._items;
   }
 
+  set items(items: OrderItem[]) {
+    this._items = items;
+  }
+
   validate() {
     if (!this._id.length) {
       throw new Error('Id is required');
