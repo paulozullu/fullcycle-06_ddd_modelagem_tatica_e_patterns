@@ -169,4 +169,52 @@ describe('OrderRepository test', () => {
     expect(foundOrder.customerId).toBe(order.customerId);
     expect(foundOrder.items).toStrictEqual(order.items);
   });
+
+  it('should find all orders', async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer('1', 'John Doe');
+    const address = new Address('Street', 'City', 7, 'Zip');
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    const product = new Product('1', 'Product', 100);
+    await productRepository.create(product);
+
+    const orderItem = new OrderItem(
+      '1',
+      product.name,
+      product.price,
+      5,
+      product.id
+    );
+
+    const order = new Order('1', customer.id, [orderItem]);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    const orderItem2 = new OrderItem(
+      '2',
+      product.name,
+      product.price,
+      10,
+      product.id
+    );
+
+    const order2 = new Order('2', customer.id, [orderItem2]);
+
+    await orderRepository.create(order2);
+
+    const orders = await orderRepository.findAll();
+
+    expect(orders).toHaveLength(2);
+    expect(orders[0].id).toBe(order.id);
+    expect(orders[0].customerId).toBe(order.customerId);
+    expect(orders[0].items).toStrictEqual(order.items);
+
+    expect(orders[1].id).toBe(order2.id);
+    expect(orders[1].customerId).toBe(order2.customerId);
+    expect(orders[1].items).toStrictEqual(order2.items);
+  });
 });
