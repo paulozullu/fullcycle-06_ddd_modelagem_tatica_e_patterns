@@ -20,6 +20,22 @@ export default class OrderItem {
     this.validate();
   }
 
+  get id(): string {
+    return this._id;
+  }
+
+  get productId(): string {
+    return this._productId;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get quantity(): number {
+    return this._quantity;
+  }
+
   validate() {
     if (!this._id.length) {
       throw new Error('Id is required');
@@ -35,6 +51,10 @@ export default class OrderItem {
 
     if (this._quantity <= 0) {
       throw new Error('Item quantity must be greater than 0');
+    }
+
+    if (!this._productId.length) {
+      throw new Error('Product Id is required');
     }
   }
 
