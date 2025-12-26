@@ -10,7 +10,12 @@ export default class EventDispatcher implements EventDispatcherInterface {
   }
 
   notify(event: EventInterface): void {
-    throw new Error('Method not implemented.');
+    const eventName = event.constructor.name;
+    if (this.eventHandlers[eventName]) {
+      this.eventHandlers[eventName].forEach((handler) => {
+        handler.handle(event);
+      });
+    }
   }
 
   register(eventName: string, eventHandler: EventHandlerInterface): void {
@@ -19,13 +24,17 @@ export default class EventDispatcher implements EventDispatcherInterface {
     }
     this.eventHandlers[eventName].push(eventHandler);
   }
-  
+
   unregister(eventName: string, eventHandler: EventHandlerInterface): void {
-    throw new Error('Method not implemented.');
+    if (this.eventHandlers[eventName]) {
+      const index = this.eventHandlers[eventName].indexOf(eventHandler);
+      if (index !== -1) {
+        this.eventHandlers[eventName].splice(index, 1);
+      }
+    }
   }
-  
+
   unregisterAll(): void {
-    throw new Error('Method not implemented.');
+    this.eventHandlers = {};
   }
-  
 }

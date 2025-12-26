@@ -5,6 +5,6 @@ export default class SendEmailWhenProductIsCreatedHandler
   implements EventHandlerInterface<ProductCreatedEvent>
 {
   handle(event: any): void {
-    console.log('Send email to .......');
+    console.log('Sending email to .......');
   }
 }
