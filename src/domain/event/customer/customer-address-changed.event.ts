@@ -1,11 +1,10 @@
-import Customer from "../../entity/customer";
 import EventInterface from "../@shared/event.interface";
 
 export default class CustomerAddressChangedEvent implements EventInterface {
   dataTimeOccured: Date;
-  eventData: Customer;
+  eventData: any;
 
-  constructor(eventData: Customer) {
+  constructor(eventData: any) {
     this.dataTimeOccured = new Date();
     this.eventData = eventData;
   }
