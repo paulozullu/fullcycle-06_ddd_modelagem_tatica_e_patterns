@@ -24,7 +24,7 @@ describe('Product unit tests', () => {
       const product = new Product('123', 'Product 3', -1);
       product.changeName('Product 4');
       expect(product.name).toBe('Product 4');
-    })
+    });
   });
 
   it('should change price', () => {
@@ -32,7 +32,6 @@ describe('Product unit tests', () => {
       const product = new Product('123', 'Product 3', 100);
       product.changePrice(150);
       expect(product.price).toBe(150);
-    })
+    });
   });
-  
 });
